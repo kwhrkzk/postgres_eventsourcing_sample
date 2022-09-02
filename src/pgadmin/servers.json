@@ -1,0 +1,24 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "read_model",
+            "Host": "read_model",
+            "Port": 5432,
+            "Group": "Servers",
+            "Username": "postgres",
+            "MaintenanceDB": "postgres",
+            "SSLMode": "prefer",
+            "PassFile": "/pgadmin4/pgpass"
+        },
+        "2": {
+            "Name": "write_model",
+            "Host": "write_model",
+            "Port": 5432,
+            "Group": "Servers",
+            "Username": "postgres",
+            "MaintenanceDB": "postgres",
+            "SSLMode": "prefer",
+            "PassFile": "/pgadmin4/pgpass"
+        }
+    }
+}

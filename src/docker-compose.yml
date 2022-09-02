@@ -1,0 +1,65 @@
+version: '3.7'
+volumes:
+  read_modeldb:
+  write_modeldb:
+services:
+  read_model:
+    build:
+      context: ./read_model
+    image: read_model
+    container_name: "read_model"
+    tty: true
+    restart: always
+    user: root
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=post
+    volumes:
+      - read_modeldb:/var/lib/postgresql/data
+  write_model:
+    build:
+      context: ./write_model
+    image: write_model
+    container_name: "write_model"
+    tty: true
+    restart: always
+    user: root
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=post
+      - POSTGRES_DB=eventstore
+    volumes:
+      - write_modeldb:/var/lib/postgresql/data
+      - ./write_model/initdb:/docker-entrypoint-initdb.d
+  pgadmin:
+    build:
+      context: ./pgadmin
+    image: pgadmin
+    container_name: pgadmin 
+    ports:
+      - 5050:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_SERVER_JSON_FILE=/pgadmin4/servers.json
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+      - PGADMIN_CONFIG_UPGRADE_CHECK_ENABLED=False
+      - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=False
+    volumes:
+      - ./pgadmin/storage:/root/storage
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    user: root
+    restart: always
+    entrypoint: /entrypoint.sh
+  dotnet:
+    build:
+      context: ./dotnet
+    image: dotnet
+    container_name: "dotnet"
+    tty: true
+    restart: always
+    user: root
+    volumes:
+      - ./dotnet/src:/root/src
+    entrypoint: /docker-entrypoint.sh

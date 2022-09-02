@@ -1,0 +1,4 @@
+read_model:5432:postgres:postgres:post
+read_model:5432:sample:postgres:post
+write_model:5432:postgres:postgres:post
+write_model:5432:eventstore:postgres:post
