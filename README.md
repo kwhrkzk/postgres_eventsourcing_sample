@@ -6,7 +6,7 @@
 ## start
 ```sh:
 cd src
-docker-compose up -d
+docker-compose up -d --build
 
 docker exec -it dotnet dotnet run --project /root/src/SampleCmd -e add -n sample_user_name
 ```
@@ -16,3 +16,6 @@ docker exec -it dotnet dotnet run --project /root/src/SampleCmd -e add -n sample
 cd src
 docker-compose down --volumes
 ```
+
+## watch
+http://localhost:5050
